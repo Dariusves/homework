@@ -1,0 +1,289 @@
+﻿@page "/orders"
+@rendermode InteractiveWebAssembly
+
+<h1>Order Management</h1>
+<h3>Press on items in the list to drill down</h3>
+
+@if (orders == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (orders.Count == 0)
+{
+    <p>No orders found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>State</th>
+                <th>Windows Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in orders)
+            {
+                <tr @onclick="() => SelectOrder(order)" style="cursor: pointer;">
+                    <td>@order.OrderId</td>
+                    <td>@order.Name</td>
+                    <td>@order.State</td>
+                    <td>@order.Windows?.Count()</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => ModifyOrder(order)" @onclick:stopPropagation="true">Modify</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteOrder(order.OrderId)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (showEditOrderForm)
+{
+    <div class="edit-order-form">
+        <EditForm Model="@editableOrder" OnValidSubmit="@HandleEditOrder">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="orderName">Order Name:</label>
+                <InputText id="orderName" class="form-control" @bind-Value="editableOrder.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="orderState">Order State:</label>
+                <InputText id="orderState" class="form-control" @bind-Value="editableOrder.State" />
+            </div>
+
+            <button type="submit" class="btn btn-success">Update Order</button>
+            <button type="button" class="btn btn-secondary" @onclick="() => showEditOrderForm = false">Cancel</button>
+        </EditForm>
+    </div>
+}
+
+@if (selectedOrder != null)
+{
+    <br>
+    <h2>Order Details: @selectedOrder.Name</h2>
+    <h3>Windows</h3>
+    @if (selectedOrder.Windows != null && selectedOrder.Windows.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity of Windows</th>
+                    <th>Total SubElements</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var window in selectedOrder.Windows)
+                {
+                    <tr @onclick="() => SelectWindow(window)" style="cursor: pointer;">
+                        <td>@window.Name</td>
+                        <td>@window.QuantityOfWindows</td>
+                        <td>@window.TotalSubElements</td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => ModifyWindow(window)" @onclick:stopPropagation="true">Modify</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteWindow(window.WindowId)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br>
+    }
+    else
+    {
+        <p>This order has no windows.</p>
+    }
+
+    <button class="btn btn-primary" @onclick="() => ShowAddWindowForm()">Add Window</button>
+
+    @if (showAddWindowForm)
+    {
+        <br>
+        <div class="add-window-form">
+            <EditForm Model="@newWindow" OnValidSubmit="@HandleAddWindow">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="windowName">Window Name:</label>
+                    <InputText id="windowName" class="form-control" @bind-Value="newWindow.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label for="quantityOfWindows">Quantity of Windows:</label>
+                    <InputNumber id="quantityOfWindows" class="form-control" @bind-Value="newWindow.QuantityOfWindows" />
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success">Save Window</button>
+                <button class="btn btn-secondary" @onclick="() => showAddWindowForm = false">Cancel</button>
+            </EditForm>
+        </div>
+    }
+    <br>
+    <button class="btn btn-secondary" @onclick="() => selectedOrder = null">Close Details</button>
+}
+
+@if (windowToEdit != null)
+{
+    <br>
+    <EditForm Model="@windowToEdit" OnValidSubmit="@HandleModifyWindow">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <InputText id="name" class="form-control" @bind-Value="windowToEdit.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity of Windows:</label>
+            <InputNumber id="quantity" class="form-control" @bind-Value="windowToEdit.QuantityOfWindows" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Window</button>
+        <button class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
+    </EditForm>
+    <br>
+}
+
+@if (selectedWindow != null)
+{
+    <br>
+    <h3>SubElements for @selectedWindow.Name</h3>
+
+    @if (selectedWindow.SubElements != null && selectedWindow.SubElements.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Element</th>
+                    <th>Type</th>
+                    <th>Width</th>
+                    <th>Height</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subElement in selectedWindow.SubElements)
+                {
+                    <tr>
+                        <td>@subElement.Element</td>
+                        <td>@subElement.Type</td>
+                        <td>@subElement.Width</td>
+                        <td>@subElement.Height</td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => HandleEditSubElement(subElement)" @onclick:stopPropagation="true">Modify</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteSubElement(subElement.SubElementId)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br>
+    }
+    else
+    {
+        <p>This window has no subelements.</p>
+    }
+
+    <button class="btn btn-primary" @onclick="() => ShowAddSubElementForm()">Add SubElement</button>
+    <button class="btn btn-secondary" @onclick="() => selectedWindow = null">Close Details</button>
+
+    @if (showAddSubElementForm)
+    {
+        <br>
+
+        <div class="add-subelement-form">
+            <EditForm Model="@newSubElement" OnValidSubmit="@HandleAddSubElement">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="element">Element:</label>
+                    <InputNumber id="element" class="form-control" @bind-Value="newSubElement.Element" />
+                    <label for="type">Type:</label>
+                    <InputText id="type" class="form-control" @bind-Value="newSubElement.Type" />
+                    <label for="width">Width:</label>
+                    <InputNumber id="width" class="form-control" @bind-Value="newSubElement.Width" />
+                    <label for="height">Height:</label>
+                    <InputNumber id="height" class="form-control" @bind-Value="newSubElement.Height" />
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success">Save SubElement</button>
+                <button class="btn btn-secondary" @onclick="() => showAddSubElementForm = false">Cancel</button>
+            </EditForm>
+        </div>
+    }
+}
+
+@if (subElementToEdit != null)
+{
+    <br>
+    <EditForm Model="@subElementToEdit" OnValidSubmit="@EditSubElement">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Element:</label>
+            <InputNumber id="name" class="form-control" @bind-Value="subElementToEdit.Element" />
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Type:</label>
+            <InputText id="quantity" class="form-control" @bind-Value="subElementToEdit.Type" />
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Width:</label>
+            <InputNumber id="quantity" class="form-control" @bind-Value="subElementToEdit.Width" />
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Height:</label>
+            <InputNumber id="quantity" class="form-control" @bind-Value="subElementToEdit.Height" />
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Update SubElement</button>
+        <button class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
+    </EditForm>
+}
+
+<br>
+
+@if (showCreateOrderForm)
+{
+    <div class="create-order-form">
+        <EditForm Model="@newOrder" OnValidSubmit="@SaveOrderAsync">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <InputText id="name" class="form-control" @bind-Value="newOrder.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="state">State:</label>
+                <InputText id="state" class="form-control" @bind-Value="newOrder.State" />
+            </div>
+            <br>
+
+            <button type="submit" class="btn btn-success">Save Order</button>
+            <button type="button" class="btn btn-secondary" @onclick="() => showCreateOrderForm = false">Cancel</button>
+        </EditForm>
+    </div>
+}
+else
+{
+    <br>
+    <button class="btn btn-primary" @onclick="CreateOrder">Create New Order</button>
+}

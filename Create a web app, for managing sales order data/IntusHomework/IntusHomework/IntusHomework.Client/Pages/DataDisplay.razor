@@ -1,0 +1,25 @@
+﻿@page "/"
+@rendermode InteractiveWebAssembly
+@using IntusHomework.DTOs
+@using IntusHomework.Client.Components
+
+<h1>Order Data Tree</h1>
+
+@if (orders == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <TreeView Orders="@orders" />
+}
+
+@code {
+    private List<OrderDTO> orders;
+    private HttpClient Http = new HttpClient { BaseAddress = new Uri("https://localhost:7281") };
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await Http.GetFromJsonAsync<List<OrderDTO>>("api/orders");
+    }
+}

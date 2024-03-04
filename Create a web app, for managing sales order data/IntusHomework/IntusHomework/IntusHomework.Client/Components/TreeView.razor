@@ -1,0 +1,45 @@
+﻿@using IntusHomework.DTOs
+
+@if (Orders != null && Orders.Any())
+{
+    <ul>
+        @foreach (var order in Orders)
+        {
+            <li>
+                @order.Name
+                @if (order.Windows != null && order.Windows.Any())
+                {
+                    <ul>
+                        @foreach (var window in order.Windows)
+                        {
+                            <li>
+                                @window.Name
+                                @if (window.SubElements != null && window.SubElements.Any())
+                                {
+                                    <ul>
+                                        @foreach (var subElement in window.SubElements)
+                                        {
+                                            <li>
+                                                @subElement.Type
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No data available to display.</p>
+}
+
+
+@code {
+    [Parameter]
+    public List<OrderDTO> Orders { get; set; }
+}

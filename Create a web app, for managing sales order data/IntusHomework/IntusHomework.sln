@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntusHomework", "IntusHomework\IntusHomework\IntusHomework.csproj", "{0D3C07B2-B703-4C1A-8E11-453E1BE9D245}"
+	ProjectSection(ProjectDependencies) = postProject
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753} = {084F8D94-BEEA-46F7-97D7-FB13DE057753}
+		{D8904784-44A0-4A3B-A42F-52452B627D7D} = {D8904784-44A0-4A3B-A42F-52452B627D7D}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntusHomework.Client", "IntusHomework\IntusHomework.Client\IntusHomework.Client.csproj", "{7F6FC544-6159-4D7B-9C0F-E0890EEAC456}"
+	ProjectSection(ProjectDependencies) = postProject
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753} = {084F8D94-BEEA-46F7-97D7-FB13DE057753}
+		{D8904784-44A0-4A3B-A42F-52452B627D7D} = {D8904784-44A0-4A3B-A42F-52452B627D7D}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntusHomework.DAL", "IntusHomework.DAL\IntusHomework.DAL.csproj", "{D8904784-44A0-4A3B-A42F-52452B627D7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntusHomework.BLL", "IntusHomework.BLL\IntusHomework.BLL.csproj", "{084F8D94-BEEA-46F7-97D7-FB13DE057753}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntusHomework.API", "IntusHomework.API\IntusHomework.API.csproj", "{3779BC58-9197-4ABB-854F-DB3718D8D889}"
+	ProjectSection(ProjectDependencies) = postProject
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753} = {084F8D94-BEEA-46F7-97D7-FB13DE057753}
+		{D8904784-44A0-4A3B-A42F-52452B627D7D} = {D8904784-44A0-4A3B-A42F-52452B627D7D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntusHomework.DTOs", "IntusHomework.DTOs\IntusHomework.DTOs.csproj", "{B21385CA-1D1B-4CC8-A41E-9A1C7BD5B9C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D3C07B2-B703-4C1A-8E11-453E1BE9D245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3C07B2-B703-4C1A-8E11-453E1BE9D245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3C07B2-B703-4C1A-8E11-453E1BE9D245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3C07B2-B703-4C1A-8E11-453E1BE9D245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F6FC544-6159-4D7B-9C0F-E0890EEAC456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F6FC544-6159-4D7B-9C0F-E0890EEAC456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F6FC544-6159-4D7B-9C0F-E0890EEAC456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F6FC544-6159-4D7B-9C0F-E0890EEAC456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8904784-44A0-4A3B-A42F-52452B627D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8904784-44A0-4A3B-A42F-52452B627D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8904784-44A0-4A3B-A42F-52452B627D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8904784-44A0-4A3B-A42F-52452B627D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084F8D94-BEEA-46F7-97D7-FB13DE057753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3779BC58-9197-4ABB-854F-DB3718D8D889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3779BC58-9197-4ABB-854F-DB3718D8D889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3779BC58-9197-4ABB-854F-DB3718D8D889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3779BC58-9197-4ABB-854F-DB3718D8D889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B21385CA-1D1B-4CC8-A41E-9A1C7BD5B9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21385CA-1D1B-4CC8-A41E-9A1C7BD5B9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21385CA-1D1B-4CC8-A41E-9A1C7BD5B9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21385CA-1D1B-4CC8-A41E-9A1C7BD5B9C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DD7AF4E-9D6C-478D-BB68-3C1A35345167}
+	EndGlobalSection
+EndGlobal
